@@ -354,55 +354,78 @@ export default function PortfolioGeneratorSaaS() {
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100">
       {/* Header */}
       <header className="bg-white shadow-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-8 h-8 text-purple-600" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              PortfolioGen Pro
-            </h1>
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
+          <div className="flex items-center justify-between mb-3 sm:mb-0">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600" />
+              <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                PortfolioGen Pro
+              </h1>
+            </div>
           </div>
           
-          <div className="flex gap-3">
+          <div className="flex gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
             <button
               onClick={() => setStep('edit')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition ${
+              className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base font-medium transition ${
                 step === 'edit' 
                   ? 'bg-purple-600 text-white' 
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
-              <Edit3 className="w-4 h-4" />
-              Éditer
+              <Edit3 className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Éditer</span>
+              <span className="sm:hidden">Édit</span>
             </button>
             
             <button
               onClick={() => setStep('preview')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition ${
+              className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base font-medium transition ${
                 step === 'preview' 
                   ? 'bg-purple-600 text-white' 
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
-              <Eye className="w-4 h-4" />
-              Prévisualiser
+              <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Prévisualiser</span>
+              <span className="sm:hidden">Voir</span>
             </button>
             
             <button
               onClick={downloadPortfolio}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg font-medium hover:from-green-600 hover:to-emerald-600 transition"
+              className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg text-sm sm:text-base font-medium hover:from-green-600 hover:to-emerald-600 transition"
             >
-              <Download className="w-4 h-4" />
-              Télécharger
+              <Download className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Télécharger</span>
+              <span className="sm:hidden">↓</span>
             </button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {step === 'edit' ? (
-          <div className="grid lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             {/* Éditeur - Colonne gauche avec scroll */}
-            <div className="space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto pr-4">
+            <div className="space-y-4 sm:space-y-6 max-h-[60vh] lg:max-h-[calc(100vh-200px)] overflow-y-auto pr-2 sm:pr-4">
+              
+              {/* Sélecteur de thème mobile - visible uniquement sur mobile */}
+              <div className="lg:hidden bg-white rounded-xl shadow-lg p-4">
+                <div className="flex items-center gap-2">
+                  <Palette className="w-4 h-4 text-gray-500" />
+                  <label className="text-sm font-medium text-gray-700">Thème :</label>
+                  <select
+                    value={theme}
+                    onChange={(e) => setTheme(e.target.value)}
+                    className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm"
+                  >
+                    <option value="modern">Moderne</option>
+                    <option value="minimalist">Minimaliste</option>
+                    <option value="creative">Créatif</option>
+                  </select>
+                </div>
+              </div>
+
               {/* Section Info Personnelle */}
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <div className="flex items-center gap-2 mb-4">
@@ -764,8 +787,8 @@ export default function PortfolioGeneratorSaaS() {
               </div>
             </div>
 
-            {/* Prévisualisation - Colonne droite sticky */}
-            <div className="sticky top-24 h-fit">
+            {/* Prévisualisation - Colonne droite sticky - cachée sur mobile */}
+            <div className="hidden lg:block sticky top-24 h-fit">
               <div className="bg-white rounded-xl shadow-lg p-4">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-gray-800">Aperçu en Direct</h3>
@@ -914,24 +937,24 @@ export default function PortfolioGeneratorSaaS() {
           </div>
         ) : (
           // Mode Prévisualisation Plein Écran
-          <div className="bg-white rounded-xl shadow-2xl p-8 max-w-5xl mx-auto">
-            <div id="portfolio-preview-full" className={`${currentTheme.bg} rounded-2xl p-12`}>
-              <div className={`${currentTheme.card} rounded-2xl shadow-2xl p-12`}>
-                <div className="text-center mb-12">
+          <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-8 max-w-5xl mx-auto">
+            <div id="portfolio-preview-full" className={`${currentTheme.bg} rounded-2xl p-6 sm:p-12`}>
+              <div className={`${currentTheme.card} rounded-2xl shadow-xl p-6 sm:p-12`}>
+                <div className="text-center mb-8 sm:mb-12">
                   {portfolioData.photo && (
-                    <div className="flex justify-center mb-8">
+                    <div className="flex justify-center mb-6 sm:mb-8">
                       <img 
                         src={portfolioData.photo} 
                         alt={portfolioData.name}
-                        className="w-40 h-40 rounded-full object-cover border-4 border-white shadow-2xl"
+                        className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-white shadow-2xl"
                       />
                     </div>
                   )}
-                  <h1 className="text-5xl font-bold text-gray-900 mb-3">{portfolioData.name}</h1>
-                  <p className={`text-2xl ${currentTheme.text} font-medium mb-6`}>{portfolioData.title}</p>
-                  <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">{portfolioData.bio}</p>
+                  <h1 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-2 sm:mb-3">{portfolioData.name}</h1>
+                  <p className={`text-xl sm:text-2xl ${currentTheme.text} font-medium mb-4 sm:mb-6`}>{portfolioData.title}</p>
+                  <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto">{portfolioData.bio}</p>
                   
-                  <div className="flex justify-center gap-6 flex-wrap">
+                  <div className="flex justify-center gap-3 sm:gap-6 flex-wrap text-sm sm:text-base">
                     {portfolioData.email && (
                       <a href={`mailto:${portfolioData.email}`} className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
                         <Mail className="w-5 h-5" />
@@ -955,18 +978,18 @@ export default function PortfolioGeneratorSaaS() {
 
                 {/* Formation */}
                 {portfolioData.education.length > 0 && (
-                  <div className="mb-12">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                      <GraduationCap className="w-8 h-8" />
+                  <div className="mb-8 sm:mb-12">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+                      <GraduationCap className="w-6 h-6 sm:w-8 sm:h-8" />
                       Formation & Diplômes
                     </h2>
-                    <div className="space-y-6">
+                    <div className="space-y-4 sm:space-y-6">
                       {portfolioData.education.map((edu, index) => (
-                        <div key={index} className={`border-l-4 ${currentTheme.border} pl-6 py-2`}>
-                          <h3 className="font-bold text-xl text-gray-900">{edu.degree}</h3>
-                          <p className={`${currentTheme.text} font-semibold text-lg`}>{edu.school}</p>
-                          <p className="text-gray-500 mb-2">{edu.year} • {edu.location}</p>
-                          {edu.description && <p className="text-gray-700">{edu.description}</p>}
+                        <div key={index} className={`border-l-4 ${currentTheme.border} pl-4 sm:pl-6 py-2`}>
+                          <h3 className="font-bold text-lg sm:text-xl text-gray-900">{edu.degree}</h3>
+                          <p className={`${currentTheme.text} font-semibold text-base sm:text-lg`}>{edu.school}</p>
+                          <p className="text-sm sm:text-base text-gray-500 mb-2">{edu.year} • {edu.location}</p>
+                          {edu.description && <p className="text-sm sm:text-base text-gray-700">{edu.description}</p>}
                         </div>
                       ))}
                     </div>
@@ -975,12 +998,12 @@ export default function PortfolioGeneratorSaaS() {
 
                 {/* Certifications */}
                 {portfolioData.certifications.length > 0 && (
-                  <div className="mb-12">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                      <FileCheck className="w-8 h-8" />
+                  <div className="mb-8 sm:mb-12">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
+                      <FileCheck className="w-6 h-6 sm:w-8 sm:h-8" />
                       Certifications & Attestations
                     </h2>
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                       {portfolioData.certifications.map((cert, index) => (
                         <div key={index} className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
                           <Star className={`w-6 h-6 ${currentTheme.text} mt-1 flex-shrink-0`} />
@@ -998,9 +1021,9 @@ export default function PortfolioGeneratorSaaS() {
 
                 {/* Compétences */}
                 {portfolioData.skills.length > 0 && (
-                  <div className="mb-12">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Compétences Professionnelles</h2>
-                    <div className="grid md:grid-cols-2 gap-4">
+                  <div className="mb-8 sm:mb-12">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">Compétences Professionnelles</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                       {portfolioData.skills.map((skill, index) => (
                         <div key={index}>
                           <div className="flex justify-between mb-2">
